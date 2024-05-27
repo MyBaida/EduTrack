@@ -1,17 +1,17 @@
 import { Routes } from '@angular/router';
+import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
 
 export const routes: Routes = [
-    {path: '', 
-    loadChildren: ()=> import('./pages/home/home.module').then(
-        m=>m.HomeModule
-    ),
-    pathMatch: 'full'
- },
- {
-    path: 'dashboard',
-    loadChildren: ()=> import('./pages/dashboard/dashboard.module').then(
-        m => m.DashboardModule
-    ),
-    pathMatch: 'full'
- }
+   {
+    path: '',
+    component: AuthLayoutComponent,
+    children: [
+        {
+            path: '',
+            loadChildren:()=> import('./layouts/auth-layout/auth-layout.module').then(
+                m => m.AuthLayoutModule
+            )
+        }
+    ]
+   }
 ];
