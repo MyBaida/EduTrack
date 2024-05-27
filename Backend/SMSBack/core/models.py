@@ -46,7 +46,7 @@ class Teacher(models.Model):
 
 class Class(models.Model):
     name = models.CharField(max_length=255, null=True, blank=True)
-    school = models.ForeignKey(School, on_delete=models.CASCADE, related_name='classes')
+    school = models.ForeignKey(School, on_delete=models.CASCADE, related_name='classes', blank=True)
     _id= models.AutoField(primary_key=True, editable=False)
 
     def __str__(self):

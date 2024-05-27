@@ -7,6 +7,7 @@ class IsSuperAdmin(permissions.BasePermission):
 
 class IsSchoolAdmin(permissions.BasePermission):
     def has_permission(self, request, view):
+        print(f"User role: {request.user.role}")
         return request.user and request.user.role == 'school_admin'
 
 class IsTeacher(permissions.BasePermission):
@@ -25,9 +26,10 @@ class IsTeacherOfSubject(permissions.BasePermission):
 class IsSchoolAdminOfSchool(permissions.BasePermission):
     def has_permission(self, request, view):
         if request.user and request.user.role == 'school_admin':
-            # Get the school ID from the request URL or query parameters
-            school_id = request.query_params.get('school_id') or view.kwargs.get('school_id')
-            # Check if the school admin belongs to the school
-            return School.objects.filter(id=school_id, admin=request.user).exists()
+            try:
+                school = School.objects.get(admin=request.user)
+                request.school = school  # Store the school in the request for later use
+                return True
+            except School.DoesNotExist:
+                return False
         return False
-
