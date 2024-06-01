@@ -15,19 +15,19 @@ const routes: Routes = [
       },
       {
         path: 'default',
-        loadComponent: () => import('./demo/default/default.component').then((c) => c.DefaultComponent)
+        loadComponent: () => import('./main/default/default.component').then((c) => c.DefaultComponent)
       },
       {
         path: 'typography',
-        loadComponent: () => import('./demo/elements/typography/typography.component')
+        loadComponent: () => import('./main/elements/typography/typography.component')
       },
       {
         path: 'color',
-        loadComponent: () => import('./demo/elements/element-color/element-color.component')
+        loadComponent: () => import('./main/elements/element-color/element-color.component')
       },
       {
         path: 'sample-page',
-        loadComponent: () => import('./demo/sample-page/sample-page.component')
+        loadComponent: () => import('./main/sample-page/sample-page.component')
       }
     ]
   },
@@ -37,7 +37,7 @@ const routes: Routes = [
     children: [
       {
         path: 'guest',
-        loadChildren: () => import('./demo/pages/authentication/authentication.module').then((m) => m.AuthenticationModule)
+        loadChildren: () => import('./main/pages/authentication/authentication.module').then((m) => m.AuthenticationModule)
       }
     ]
   }
