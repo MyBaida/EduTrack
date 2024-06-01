@@ -15,19 +15,16 @@ const routes: Routes = [
       },
       {
         path: 'default',
-        loadComponent: () => import('./main/default/default.component').then((c) => c.DefaultComponent)
+        loadComponent: () => import('./main/default/default.component').then((c) => c.DefaultComponent),
       },
       {
         path: 'typography',
-        loadComponent: () => import('./main/elements/typography/typography.component')
       },
       {
         path: 'color',
-        loadComponent: () => import('./main/elements/element-color/element-color.component')
       },
       {
         path: 'sample-page',
-        loadComponent: () => import('./main/sample-page/sample-page.component')
       }
     ]
   },
