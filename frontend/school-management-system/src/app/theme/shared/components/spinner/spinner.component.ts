@@ -36,6 +36,8 @@ export class SpinnerComponent implements OnDestroy {
         this.isSpinnerVisible = false;
       }
     );
+
+    //subscribe httpclient events
   }
 
   // life cycle event
