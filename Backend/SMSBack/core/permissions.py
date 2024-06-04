@@ -28,8 +28,21 @@ class IsSchoolAdminOfSchool(permissions.BasePermission):
         if request.user and request.user.role == 'school_admin':
             try:
                 school = School.objects.get(admin=request.user)
+                print(request.user)
+                print(school.admin)
                 request.school = school  # Store the school in the request for later use
                 return True
             except School.DoesNotExist:
                 return False
         return False
+
+# class IsSchoolAdminOfSchool(permissions.BasePermission):
+#     def has_permission(self, request, view):
+#         if request.user and request.user.role == 'school_admin':
+#             user_school = School.objects.filter(admin=request.user).first()
+#             print(request.user)
+#             print(user_school.admin)
+#             if user_school and 'school_id' in request.data and request.data['school_id'] == user_school._id:
+#                 request.school = user_school  # Store the school in the request for later use
+#                 return True
+#         return False
