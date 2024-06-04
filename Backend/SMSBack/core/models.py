@@ -10,6 +10,8 @@ class User(AbstractUser):
     ]
 
     role = models.CharField(max_length=50, choices=ROLE_CHOICES)
+    profile= models.ImageField(null=True, blank=True, default='/placeholder.png')
+
 
     def __str__(self):
         return self.username
@@ -38,10 +40,9 @@ class Teacher(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='teacher_profile')
     _id= models.AutoField(primary_key=True, editable=False)
     school = models.ForeignKey(School, on_delete=models.CASCADE, related_name='teachers')
-    profile= models.ImageField(null=True, blank=True, default='/placeholder.png')
 
     def __str__(self):
-        return self.user.get_full_name()
+        return self.user.username
 
 
 class Class(models.Model):
@@ -61,7 +62,7 @@ class Student(models.Model):
     profile= models.ImageField(null=True, blank=True, default='/placeholder.png')
     school = models.ForeignKey(School, on_delete=models.CASCADE, related_name='students')
     current_class = models.ForeignKey(Class, on_delete=models.SET_NULL, null=True, related_name='students')
-    completed = models.BooleanField(default=False)
+    completed = models.BooleanField(default=False, blank=True, null=True)
     completed_date = models.DateField()
     _id= models.AutoField(primary_key=True, editable=False)
 
@@ -88,8 +89,6 @@ class Subject(models.Model):
 
     def __str__(self):
         return self.name
-
-
 
 class Grade(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='grades')

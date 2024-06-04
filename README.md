@@ -51,3 +51,147 @@
     "school": "Presec Boys School",
     "name": "3Science8"
 }
+
+> GET - getting list of all users - http://127.0.0.1:8000/api/users 
+>> [
+    {
+        "id": 1,
+        "_id": 1,
+        "username": "admin@gmail.com",
+        "email": "admin@gmail.com",
+        "name": "admin@gmail.com",
+        "role": "school_admin",
+        "school_id": 1,
+        "profile": "/images/placeholder.png"
+    },
+    {
+        "id": 2,
+        "_id": 2,
+        "username": "emma",
+        "email": "emma@gmail.com",
+        "name": "emma",
+        "role": "super_admin",
+        "school_id": null,
+        "profile": "/images/placeholder.png"
+    }
+]
+
+> GET - get logged in user details - http://127.0.0.1:8000/api/users/profile
+>> {
+        "id": 1,
+        "_id": 1,
+        "username": "admin@gmail.com",
+        "email": "admin@gmail.com",
+        "name": "admin@gmail.com",
+        "role": "school_admin",
+        "school_id": 1,
+        "profile": "/images/placeholder.png"
+    }
+
+> GET - get user by id - http://127.0.0.1:8000/api/users/id 
+>> {
+        "id": 1,
+        "_id": 1,
+        "username": "admin@gmail.com",
+        "email": "admin@gmail.com",
+        "name": "admin@gmail.com",
+        "role": "school_admin",
+        "school_id": 1,
+        "profile": "/images/placeholder.png"
+    }
+
+> GET - get teachers of a school - http://127.0.0.1:8000/api/schools/id/teachers 
+>> [
+    {
+        "_id": 1,
+        "name": "Ub",
+        "subjects": [
+            {
+                "name": "Mathematics",
+                "code": "1"
+            },
+            {
+                "name": "Chemistry",
+                "code": "2"
+            }
+        ]
+    },
+    {
+        "_id": 2,
+        "name": "Michael",
+        "subjects": [
+            {
+                "name": "Chemistry",
+                "code": "2"
+            },
+            {
+                "name": "Mathematics",
+                "code": "1"
+            }
+        ]
+    }
+]
+
+> GET - get all teachers - http://127.0.0.1:8000/api/teachers
+>> [
+    {
+        "_id": 1,
+        "name": "Ub",
+        "subjects": [
+            {
+                "name": "Mathematics",
+                "code": "1"
+            },
+            {
+                "name": "Chemistry",
+                "code": "2"
+            }
+        ]
+    },
+    {
+        "_id": 2,
+        "name": "Michael",
+        "subjects": [
+            {
+                "name": "Chemistry",
+                "code": "2"
+            },
+            {
+                "name": "Mathematics",
+                "code": "1"
+            }
+        ]
+    }
+]
+
+> GET - get a teacher (super admin) - http://127.0.0.1:8000/api/teachers/id
+>> {
+        "_id": 1,
+        "name": "Ub",
+        "subjects": [
+            {
+                "name": "Mathematics",
+                "code": "1"
+            },
+            {
+                "name": "Chemistry",
+                "code": "2"
+            }
+        ]
+    }
+
+> GET - get teacher of a school - http://127.0.0.1:8000/api/schools/teacher
+>>  {
+        "_id": 1,
+        "name": "Ub",
+        "subjects": [
+            {
+                "name": "Mathematics",
+                "code": "1"
+            },
+            {
+                "name": "Chemistry",
+                "code": "2"
+            }
+        ]
+    }
