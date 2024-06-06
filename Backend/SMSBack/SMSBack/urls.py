@@ -27,7 +27,7 @@ urlpatterns = [
     path('api/users/', include('core.urls.users_urls')),
     path('api/teachers/', include('core.urls.teachers_urls')),
     path('api/grades/', include('core.urls.grades_urls')),
-    path('api/subjects/', include('core.urls.subjects_urls')),
+    # path('api/subjects/', include('core.urls.subjects_urls')),
     path('api/semesters/', include('core.urls.semesters_urls')),
 ]
 

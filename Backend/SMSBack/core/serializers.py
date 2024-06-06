@@ -11,7 +11,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['id', '_id', 'username', 'email', 'name', 'role', 'school_id']
+        fields = ['id', '_id', 'username', 'email', 'name', 'role', 'school_id', 'profile']
 
     def get__id(self, obj):
         return obj.id
@@ -33,7 +33,7 @@ class UserSerializerWithToken(UserSerializer):
     token = serializers.SerializerMethodField(read_only=True)
     class Meta:
         model = User
-        fields = ['id', '_id', 'username', 'email', 'name', 'role', 'token', 'school_id']
+        fields = ['id', '_id', 'username', 'email', 'name', 'role', 'token', 'school_id', 'profile']
 
     def get_token(self, obj):
         token = RefreshToken.for_user(obj)
@@ -42,7 +42,7 @@ class UserSerializerWithToken(UserSerializer):
 class CreateUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['username', 'password', 'email', 'first_name', 'last_name']
+        fields = ['username', 'password', 'email']
 
     def create(self, validated_data):
         user = User.objects.create(
@@ -78,3 +78,28 @@ class SchoolSerializer(serializers.ModelSerializer):
         school.admin = admin_data
         school.save()
         return school
+    
+class GradeSerializer(serializers.ModelSerializer):
+    student = serializers.CharField(source='student.name', read_only=True)
+    subject = serializers.CharField(source='subject.name', read_only=True)
+    semester = serializers.CharField(source='semester.name', read_only=True)
+    class Meta:
+        model = Grade
+        fields = '__all__'
+
+class SemesterSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Semester
+        fields = '__all__'
+
+class SubjectSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Subject
+        fields = ['name', 'code']  
+
+class TeacherSerializer(serializers.ModelSerializer):
+    name = serializers.CharField(source='user.username', read_only=True)
+    subjects = SubjectSerializer(many=True, read_only=True)
+    class Meta:
+        model = Teacher
+        fields = ['_id', 'name', 'subjects']
