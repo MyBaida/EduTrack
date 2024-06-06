@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAdminUser 
 
-from core.models import Class, School
+from core.models import Class, School, Grade, Semester, Subject
 from core.serializers import ClassSerializer
 from core.permissions import IsSuperAdmin, IsSchoolAdmin, IsTeacher, IsTeacherOfSubject, IsSchoolAdminOfSchool
 
@@ -40,6 +40,45 @@ def createClass(request):
             serializer.save(school=school)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+
+@api_view(['GET'])
+@permission_classes([IsSchoolAdmin])
+def get_subject_grade_statistics(request, class_id, semester_id):
+    try:
+        class_instance = Class.objects.get(_id=class_id)
+        semester_instance = Semester.objects.get(_id=semester_id)
+    except Class.DoesNotExist:
+        return Response({'error': 'Class not found'}, status=status.HTTP_404_NOT_FOUND)
+    except Semester.DoesNotExist:
+        return Response({'error': 'Semester not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    subjects = Subject.objects.filter(school=class_instance.school)
+    response_data = []
+
+    for subject in subjects:
+        grades = Grade.objects.filter(
+            student__current_class=class_instance,
+            semester=semester_instance,
+            subject=subject
+        )
+
+        number_of_passed = grades.filter(grade__in=['1', '2', '3', '4']).count()
+        number_of_average = grades.filter(grade__in=['5', '6']).count()
+        number_of_failed = grades.filter(grade__in=['7', '8', '9']).count()
+
+        response_data.append({
+            "className": class_instance.name,
+            "class_id": class_instance._id,
+            "semester": semester_instance.name,
+            "subjectName": subject.name,
+            "number_of_passed": number_of_passed,
+            "number_of_average": number_of_average,
+            "number_of_failed": number_of_failed,
+            "date_recorded": grades.first().date_recorded if grades.exists() else None
+        })
+
+    return Response(response_data, status=status.HTTP_200_OK)
 
 
 # @api_view(['POST'])
