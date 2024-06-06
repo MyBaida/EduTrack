@@ -20,6 +20,7 @@ import { ConfigurationComponent } from './theme/layout/admin/configuration/confi
 import { GuestComponent } from './theme/layout/guest/guest.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { authInterceptor } from './interceptors/auth/auth.interceptor';
+import { HttpConfigInterceptor } from './interceptors/http/http-config-interceptor.interceptor';
 
 @NgModule({
   declarations: [
@@ -44,9 +45,10 @@ import { authInterceptor } from './interceptors/auth/auth.interceptor';
     BrowserAnimationsModule,
     HttpClientModule,
   ],
-  providers: [NavigationItem, {
-    provide: HTTP_INTERCEPTORS, useClass: authInterceptor, multi: true
-  }],
+  providers: [NavigationItem, 
+    {provide: HTTP_INTERCEPTORS, useClass: authInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: HttpConfigInterceptor, multi: true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

@@ -10,14 +10,14 @@ export class authService {
 
   constructor(private http:HttpClient) { }
 
-  private loginUrl = 'http://127.0.0.1:8000/api/users/login';
+  private loginUrl = '/api/users/login/';
 
   // loginSatus =  new BehaviorSubject<boolean>(false);
   // loginStatus$ = this.loginSatus.asObservable();
-  isLoggedIn = false;
+  isLoggedIn = localStorage.getItem('token') ? true : false;
 
-  Login(username: string, passowrd:string){
-    return this.http.post<loginResponse>(this.loginUrl,{username,passowrd}).pipe(
+  Login(username: string, password:string){
+    return this.http.post<loginResponse>(this.loginUrl,{username,password},).pipe(
       tap(
         (response)=> {
           if(response.token){

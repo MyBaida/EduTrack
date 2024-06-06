@@ -5,6 +5,7 @@ import { DOCUMENT } from '@angular/common';
 
 // project import
 import { Spinkit } from './spinkits';
+import { HttpConfigInterceptor } from 'src/app/interceptors/http/http-config-interceptor.interceptor';
 
 @Component({
   selector: 'app-spinner',
@@ -22,7 +23,8 @@ export class SpinnerComponent implements OnDestroy {
   // Constructor
   constructor(
     private router: Router,
-    @Inject(DOCUMENT) private document: Document
+    @Inject(DOCUMENT) private document: Document,
+    private httpInterceptor: HttpConfigInterceptor
   ) {
     this.router.events.subscribe(
       (event) => {
@@ -38,10 +40,17 @@ export class SpinnerComponent implements OnDestroy {
     );
 
     //subscribe httpclient events
+    httpInterceptor.loadingSubject.subscribe(
+      (isLoading)=>{
+        this.isSpinnerVisible = isLoading
+      }
+    )
   }
 
   // life cycle event
   ngOnDestroy(): void {
+    this.httpInterceptor.loadingSubject.unsubscribe();
     this.isSpinnerVisible = false;
+
   }
 }

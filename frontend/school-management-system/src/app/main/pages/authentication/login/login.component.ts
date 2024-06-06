@@ -21,7 +21,7 @@ export default class LoginComponent {
 
 
   loginForm = this.fb.group({
-    username: ['', [Validators.required]],
+    username: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required]]
   }) 
   get username() {
