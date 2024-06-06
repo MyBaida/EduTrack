@@ -1,5 +1,5 @@
 // angular import
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
 // project import
 import { SharedModule } from 'src/app/theme/shared/shared.module';
@@ -17,6 +17,9 @@ import {
   ApexPlotOptions,
   ApexResponsive
 } from 'ng-apexcharts';
+import { GradesService } from 'src/app/services/dashboard/grades/grades.service';
+import { Observable, Subject } from 'rxjs';
+import { GradesResponse } from 'src/app/services/dashboard/grades/grades-response';
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -37,25 +40,64 @@ export type ChartOptions = {
   templateUrl: './bar-chart.component.html',
   styleUrl: './bar-chart.component.scss'
 })
-export class BarChartComponent {
+export class BarChartComponent{
   // public props
   @ViewChild('chart') chart!: ChartComponent;
   chartOptions!: Partial<ChartOptions>;
 
-  // Constructor
-  constructor() {
+  // gardes Observable
+
+  grades : GradesResponse[] | undefined;
+  // private passedStudents = {
+  //   name : "passed",
+  //   data : []
+  // }
+
+  private failedStudents = {}
+  private passedStudentsInSubject(grades: GradesResponse[], subject: string): number {
+    const grade = grades.find(grade => grade.subject === subject);
+    return grade ? grade.number_of_passed : 0;
+  }
+
+  private averageStudentsInSubject(grades: GradesResponse[], subject: string): number {
+    const grade = grades.find(grade => grade.subject === subject);
+    return grade ? grade.number_of_average : 0;
+  }
+  private failedStudentsInSubject(grades: GradesResponse[], subject: string): number {
+    const grade = grades.find(grade => grade.subject === subject);
+    return grade ? grade.number_of_failed : 0;
+  }
+  constructor(private gradesService: GradesService) {
+  gradesService.getGrades(1,1).subscribe(
+    response => this.grades = response
+  )
+  
+  
+
     this.chartOptions = {
       series: [
+
         {
-          name: 'Investment',
-          data: [35, 125, 35, 35, 35, 80, 35, 20, 35, 45, 15, 75]
+          name: 'failed',
+          // data: [35, 125, 35, 35, 35, 80, 35, 20, 35, 45, 15, 75]
+          data: [
+            this.passedStudentsInSubject(this.grades, 'Math'),
+            this.passedStudentsInSubject(this.grades, 'Science'),
+            this.passedStudentsInSubject(this.grades, 'Social'),
+            this.passedStudentsInSubject(this.grades, 'English'),
+            this.passedStudentsInSubject(this.grades, 'ICT'),
+            this.passedStudentsInSubject(this.grades, 'RME'),
+            this.passedStudentsInSubject(this.grades, 'BDT'),
+            this.passedStudentsInSubject(this.grades, 'GH.Lang'),
+            this.passedStudentsInSubject(this.grades, 'French')
+          ]
         },
         {
-          name: 'Loss',
+          name: 'average',
           data: [35, 15, 15, 35, 65, 40, 80, 25, 15, 85, 25, 75]
         },
         {
-          name: 'Profit',
+          name: 'passed',
           data: [35, 145, 35, 35, 20, 105, 100, 10, 65, 45, 30, 10]
         },
         {
@@ -63,6 +105,10 @@ export class BarChartComponent {
           data: [0, 0, 75, 0, 0, 115, 0, 0, 0, 0, 150, 0]
         }
       ],
+    
+    
+
+
       dataLabels: {
         enabled: false
       },
@@ -96,11 +142,13 @@ export class BarChartComponent {
       },
       xaxis: {
         type: 'category',
-        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+        categories: ['Math', 'Science', 'Social', 'English', 'ICT', 'RME', 'BDT', 'GH.Lang', 'French']
       },
       tooltip: {
         theme: 'light'
       }
     };
   }
+  
+  
 }

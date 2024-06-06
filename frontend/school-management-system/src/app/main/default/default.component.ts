@@ -1,5 +1,5 @@
 // Angular Import
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 // project import
@@ -7,6 +7,9 @@ import { SharedModule } from 'src/app/theme/shared/shared.module';
 import { BarChartComponent } from './bar-chart/bar-chart.component';
 import { BajajChartComponent } from './bajaj-chart/bajaj-chart.component';
 import { ChartDataMonthComponent } from './chart-data-month/chart-data-month.component';
+import { ProfileService } from 'src/app/services/dashboard/profile/profile.service';
+import { Observable } from 'rxjs';
+import { GradesResponse } from 'src/app/services/dashboard/grades/grades-response';
 
 @Component({
   selector: 'app-default',
@@ -15,7 +18,12 @@ import { ChartDataMonthComponent } from './chart-data-month/chart-data-month.com
   templateUrl: './default.component.html',
   styleUrls: ['./default.component.scss']
 })
-export class DefaultComponent {
+export class DefaultComponent  {
+  constructor( profile: ProfileService ){}
+
+
+
+
   // public method
   ListGroup = [
     {
