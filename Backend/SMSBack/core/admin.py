@@ -6,8 +6,12 @@ from .models import *
 
 class UserAdmin(BaseUserAdmin):
     fieldsets = BaseUserAdmin.fieldsets + (
-        (None, {'fields': ('role',)}),
+        (None, {'fields': ('role', 'profile')}),
     )
+    add_fieldsets = BaseUserAdmin.add_fieldsets + (
+        (None, {'fields': ('role', 'profile')}),
+    )
+
 
 admin.site.register(User, UserAdmin)
 admin.site.register(School)

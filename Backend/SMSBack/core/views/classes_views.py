@@ -12,17 +12,19 @@ from core.permissions import IsSuperAdmin, IsSchoolAdmin, IsTeacher, IsTeacherOf
 from rest_framework import status
 
 
-# @api_view(['GET'])
-# def getCategories(request):
-#     categories = Category.objects.all()
-#     serializer = CategorySerializer(categories, many=True)
-#     return Response(serializer.data)
+@api_view(['GET'])
+@permission_classes([IsSchoolAdmin])
+def getClasses(request):
+    classes = Class.objects.all()
+    serializer = ClassSerializer(classes, many=True)
+    return Response(serializer.data)
 
-# @api_view(['GET'])
-# def getCategory(request, pk):
-#     product = Category.objects.get(_id=pk)
-#     serializer = CategorySerializer(product, many=False)
-#     return Response(serializer.data)
+@api_view(['GET'])
+@permission_classes([IsSchoolAdmin])
+def getClass(request, pk):
+    classs = Class.objects.get(_id=pk)
+    serializer = ClassSerializer(classs, many=False)
+    return Response(serializer.data)
 
 
 @api_view(['POST'])
