@@ -11,13 +11,17 @@ from core.permissions import IsSuperAdmin, IsSchoolAdmin, IsTeacher, IsTeacherOf
 
 from rest_framework import status
 
-
 @api_view(['GET'])
 @permission_classes([IsSchoolAdmin])
 def getClasses(request):
-    classes = Class.objects.all()
+    try:
+        school = request.user.managed_school  # This assumes the User model has a managed_school related name pointing to the School model
+    except School.DoesNotExist:
+        return Response({'error': 'School not found for the current admin'}, status=status.HTTP_404_NOT_FOUND)
+
+    classes = Class.objects.filter(school=school)
     serializer = ClassSerializer(classes, many=True)
-    return Response(serializer.data)
+    return Response(serializer.data, status=status.HTTP_200_OK)
 
 @api_view(['GET'])
 @permission_classes([IsSchoolAdmin])

@@ -58,9 +58,16 @@ class CreateUserSerializer(serializers.ModelSerializer):
     
 class ClassSerializer(serializers.ModelSerializer):
     school = serializers.CharField(source='school.name', read_only=True)
+    className = serializers.SerializerMethodField()
+    class_id = serializers.SerializerMethodField()
     class Meta:
         model = Class
-        fields = '__all__'
+        fields = ['className', 'class_id', 'school']
+
+    def get_className(self, obj):
+        return obj.name
+    def get_class_id(self, obj):
+        return obj._id
     
 class SchoolSerializer(serializers.ModelSerializer):
     admin_username = serializers.SerializerMethodField(read_only=True)
