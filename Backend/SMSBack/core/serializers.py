@@ -79,13 +79,35 @@ class SchoolSerializer(serializers.ModelSerializer):
         school.save()
         return school
     
+class StudentSerializer(serializers.ModelSerializer):
+    # name = serializers.CharField(source='student.first_name', read_only=True)
+    class Meta:
+        model = Student
+        fields = '__all__' 
+    
+# class GradeSerializer(serializers.ModelSerializer):
+#     student = serializers.CharField(source='student.first_name', read_only=True)
+#     student_id = serializers.CharField(source='student._id', read_only=True)
+#     subject = serializers.CharField(source='subject.name', read_only=True)
+#     semester = serializers.CharField(source='semester.name', read_only=True)
+#     class Meta:
+#         model = Grade
+#         fields = '__all__'
+
 class GradeSerializer(serializers.ModelSerializer):
-    student = serializers.CharField(source='student.name', read_only=True)
+    className = serializers.CharField(source='class.name', read_only=True)
+    student = serializers.SerializerMethodField()
+    student_id = serializers.CharField(source='student._id', read_only=True)
     subject = serializers.CharField(source='subject.name', read_only=True)
     semester = serializers.CharField(source='semester.name', read_only=True)
+
     class Meta:
         model = Grade
-        fields = '__all__'
+        fields = ['className', 'student', 'student_id', 'subject', 'semester', 'grade', 'date_recorded']
+
+    def get_student(self, obj):
+        return f"{obj.student.first_name} {obj.student.last_name}"
+
 
 class SemesterSerializer(serializers.ModelSerializer):
     class Meta:
