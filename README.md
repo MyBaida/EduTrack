@@ -195,3 +195,77 @@
             }
         ]
     }
+
+> GET - Grade statistics of a class of a school (school admin) - http://127.0.0.1:8000/api/classes/class_id/semester/semester_id/
+
+>> [
+    {
+        "className": "3Science6",
+        "class_id": 1,
+        "semester": "2023/2024 Semester 1",
+        "subjectName": "Mathematics",
+        "number_of_passed": 1,
+        "number_of_average": 0,
+        "number_of_failed": 0,
+        "date_recorded": "2024-05-28"
+    },
+    {
+        "className": "3Science6",
+        "class_id": 1,
+        "semester": "2023/2024 Semester 1",
+        "subjectName": "Chemistry",
+        "number_of_passed": 1,
+        "number_of_average": 0,
+        "number_of_failed": 0,
+        "date_recorded": "2024-05-28"
+    }
+]
+
+> GET - Classes of a school - http://127.0.0.1:8000/api/classes/
+>> [
+    {
+        "className": "3Science6",
+        "class_id": 1,
+        "school": "Achimota School"
+    },
+    {
+        "className": "3Science7",
+        "class_id": 2,
+        "school": "Achimota School"
+    },
+    {
+        "className": "3Science7",
+        "class_id": 3,
+        "school": "Achimota School"
+    },
+    {
+        "className": "3Science8",
+        "class_id": 4,
+        "school": "Achimota School"
+    },
+    {
+        "className": "3Science8",
+        "class_id": 5,
+        "school": "Achimota School"
+    },
+    {
+        "className": "3Science8",
+        "class_id": 6,
+        "school": "Achimota School"
+    },
+    {
+        "className": "3Science8",
+        "class_id": 9,
+        "school": "Achimota School"
+    }
+]
+
+> GET - Semesters of a school - http://127.0.0.1:8000/api/semesters/
+>> [
+    {
+        "_id": 1,
+        "name": "2023/2024 Semester 1",
+        "start_date": "2024-05-05",
+        "end_date": "2024-05-08"
+    }
+]

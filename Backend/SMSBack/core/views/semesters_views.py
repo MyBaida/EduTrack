@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAdminUser 
 
-from core.models import Semester
+from core.models import Semester, Subject, School
 from core.serializers import SemesterSerializer
 from core.permissions import IsSuperAdmin, IsSchoolAdmin, IsTeacher, IsTeacherOfSubject, IsSchoolAdminOfSchool
 
@@ -15,9 +15,19 @@ from rest_framework import status
 @api_view(['GET'])
 @permission_classes([IsSchoolAdmin])
 def getSemesters(request):
-    semesters = Semester.objects.order_by('-start_date')
+    try:
+        school = request.user.managed_school
+    except School.DoesNotExist:
+        return Response({'error': 'School not found for the current admin'}, status=status.HTTP_404_NOT_FOUND)
+
+    # Get all subjects linked to the school
+    subjects = Subject.objects.filter(school=school)
+    
+    # Get all semesters linked to the subjects of the school
+    semesters = Semester.objects.filter(subjects__in=subjects).distinct()
+    
     serializer = SemesterSerializer(semesters, many=True)
-    return Response(serializer.data)
+    return Response(serializer.data, status=status.HTTP_200_OK)
 
 @api_view(['GET'])
 @permission_classes([IsSchoolAdmin])
