@@ -12,6 +12,8 @@ import { NgScrollbarModule } from 'ngx-scrollbar';
 
 // bootstrap import
 import { NgbDropdownModule, NgbNavModule, NgbModule, NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpConfigInterceptor } from 'src/app/interceptors/http/http-config-interceptor.interceptor';
 
 @NgModule({
   imports: [

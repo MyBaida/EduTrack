@@ -17,6 +17,7 @@ import {
   ApexTheme,
   ApexTooltip
 } from 'ng-apexcharts';
+import { GradesService } from 'src/app/services/dashboard/grades/grades.service';
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -38,6 +39,9 @@ export type ChartOptions = {
   styleUrl: './chart-data-month.component.scss'
 })
 export class ChartDataMonthComponent implements OnInit {
+
+  constructor(private grades: GradesService){}
+  grades$ = this.grades.getGrades(1,1)
   // public props
   @ViewChild('chart') chart!: ChartComponent;
   chartOptions!: Partial<ChartOptions>;
@@ -46,6 +50,7 @@ export class ChartDataMonthComponent implements OnInit {
 
   // life cycle event
   ngOnInit() {
+    this.grades$ = this.grades.getGrades(1,1)
     this.btnActive = 'year';
     this.chartOptions = {
       chart: {
