@@ -79,18 +79,18 @@ export class BarChartComponent{
 
         {
           name: 'failed',
-          // data: [35, 125, 35, 35, 35, 80, 35, 20, 35, 45, 15, 75]
-          data: [
-            this.passedStudentsInSubject(this.grades, 'Math'),
-            this.passedStudentsInSubject(this.grades, 'Science'),
-            this.passedStudentsInSubject(this.grades, 'Social'),
-            this.passedStudentsInSubject(this.grades, 'English'),
-            this.passedStudentsInSubject(this.grades, 'ICT'),
-            this.passedStudentsInSubject(this.grades, 'RME'),
-            this.passedStudentsInSubject(this.grades, 'BDT'),
-            this.passedStudentsInSubject(this.grades, 'GH.Lang'),
-            this.passedStudentsInSubject(this.grades, 'French')
-          ]
+          data: [35, 125, 35, 35, 35, 80, 35, 20, 35, 45, 15, 75]
+          // data: [
+          //   this.passedStudentsInSubject(this.grades, 'Math'),
+          //   this.passedStudentsInSubject(this.grades, 'Science'),
+          //   this.passedStudentsInSubject(this.grades, 'Social'),
+          //   this.passedStudentsInSubject(this.grades, 'English'),
+          //   this.passedStudentsInSubject(this.grades, 'ICT'),
+          //   this.passedStudentsInSubject(this.grades, 'RME'),
+          //   this.passedStudentsInSubject(this.grades, 'BDT'),
+          //   this.passedStudentsInSubject(this.grades, 'GH.Lang'),
+          //   this.passedStudentsInSubject(this.grades, 'French')
+          // ]
         },
         {
           name: 'average',

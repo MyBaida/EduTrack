@@ -4,7 +4,7 @@ import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/c
 import { Observable, Subject } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class HttpConfigInterceptor implements HttpInterceptor {
   public loadingSubject = new Subject<boolean>();
 
