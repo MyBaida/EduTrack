@@ -40,8 +40,7 @@ export type ChartOptions = {
 })
 export class ChartDataMonthComponent implements OnInit {
 
-  constructor(private grades: GradesService){}
-  grades$ = this.grades.getGrades(1,1)
+  constructor(){}
   // public props
   @ViewChild('chart') chart!: ChartComponent;
   chartOptions!: Partial<ChartOptions>;
@@ -50,7 +49,6 @@ export class ChartDataMonthComponent implements OnInit {
 
   // life cycle event
   ngOnInit() {
-    this.grades$ = this.grades.getGrades(1,1)
     this.btnActive = 'year';
     this.chartOptions = {
       chart: {

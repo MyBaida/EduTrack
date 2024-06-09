@@ -21,6 +21,7 @@ import { GuestComponent } from './theme/layout/guest/guest.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { authInterceptor } from './interceptors/auth/auth.interceptor';
 import { HttpConfigInterceptor } from './interceptors/http/http-config-interceptor.interceptor';
+import { NgModel } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { HttpConfigInterceptor } from './interceptors/http/http-config-intercept
     SharedModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    NgModule
   ],
   providers: [NavigationItem, 
     {provide: HTTP_INTERCEPTORS, useClass: authInterceptor, multi: true},
