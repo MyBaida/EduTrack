@@ -78,15 +78,15 @@
 
 > GET - get logged in user details - http://127.0.0.1:8000/api/users/profile
 >> {
-        "id": 1,
-        "_id": 1,
-        "username": "admin@gmail.com",
-        "email": "admin@gmail.com",
-        "name": "admin@gmail.com",
-        "role": "school_admin",
-        "school_id": 1,
-        "profile": "/images/placeholder.png"
-    }
+    "id": 1,
+    "_id": 1,
+    "username": "admin@gmail.com",
+    "email": "admin@gmail.com",
+    "name": "admin@gmail.com",
+    "role": "school_admin",
+    "school_id": 1,
+    "profile": "http://127.0.0.1:8000/images/placeholder.png"
+}
 
 > GET - get user by id - http://127.0.0.1:8000/api/users/id 
 >> {
@@ -196,7 +196,7 @@
         ]
     }
 
-> GET - Grade statistics of a class of a school (school admin) - http://127.0.0.1:8000/api/classes/class_id/semester/semester_id/
+> GET - Grade statistics of a class of a school (school admin) - http://127.0.0.1:8000/api/classes/class_id/semester/semester_id/subject-statistics/
 
 >> [
     {
@@ -224,39 +224,22 @@
 > GET - Classes of a school - http://127.0.0.1:8000/api/classes/
 >> [
     {
-        "className": "3Science6",
-        "class_id": 1,
-        "school": "Achimota School"
-    },
-    {
         "className": "3Science7",
-        "class_id": 2,
-        "school": "Achimota School"
-    },
-    {
-        "className": "3Science7",
-        "class_id": 3,
-        "school": "Achimota School"
-    },
-    {
-        "className": "3Science8",
-        "class_id": 4,
-        "school": "Achimota School"
-    },
-    {
-        "className": "3Science8",
-        "class_id": 5,
-        "school": "Achimota School"
-    },
-    {
-        "className": "3Science8",
-        "class_id": 6,
-        "school": "Achimota School"
+        "class_id": 8,
+        "school": "Achimota School",
+        "student_count": 5
     },
     {
         "className": "3Science8",
         "class_id": 9,
-        "school": "Achimota School"
+        "school": "Achimota School",
+        "student_count": 5
+    },
+    {
+        "className": "3Science6",
+        "class_id": 10,
+        "school": "Achimota School",
+        "student_count": 5
     }
 ]
 

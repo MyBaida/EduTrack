@@ -46,5 +46,5 @@ def getUserById(request, pk):
 @permission_classes([IsAuthenticated])
 def getUserProfile(request):
     user = request.user
-    serializer = UserSerializer(user, many=False)
+    serializer = UserSerializer(user, context={'request': request})
     return Response(serializer.data)
