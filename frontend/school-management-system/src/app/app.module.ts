@@ -44,8 +44,7 @@ import { NgModel } from '@angular/forms';
     AppRoutingModule,
     SharedModule,
     BrowserAnimationsModule,
-    HttpClientModule,
-    NgModule
+    HttpClientModule
   ],
   providers: [NavigationItem, 
     {provide: HTTP_INTERCEPTORS, useClass: authInterceptor, multi: true},

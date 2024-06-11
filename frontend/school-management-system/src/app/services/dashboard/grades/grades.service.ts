@@ -26,22 +26,22 @@ export class GradesService {
   constructor(private http: HttpClient) { }
 
   private gradesURl(classNumber:number, semester: number)  {
-    return `/api/grades/class/${classNumber}/semester/${semester}`
+    return `/api/classes/${classNumber}/semester/${semester}/subject-statistics`
  };
 
  private allClassesUrl = '/api/classes'
  private allSemestersUrl = 'api/semesters'
 
- getGrades(classNumber, semester){
-  return this.http.get<GradesResponse[]>(this.gradesURl(classNumber,semester))
+ getGrades(classNumber, semesterId){
+  return this.http.get<GradesResponse[]>(this.gradesURl(classNumber,semesterId))
  }
 
  getClasses(){
-  return this.http.get<allClassesResponse>(this.allClassesUrl)
+  return this.http.get<allClassesResponse[]>(this.allClassesUrl)
  }
 
  getSemesters(){
-  return this.http.get<allSemestersResponse>(this.allSemestersUrl)
+  return this.http.get<allSemestersResponse[]>(this.allSemestersUrl)
  }
 
 

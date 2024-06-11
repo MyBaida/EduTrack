@@ -7,19 +7,19 @@
       </div>
       <form [formGroup]="classSemesterSelectionFrom" (ngSubmit)="classSemesterSelectionFormSubmission()">
         <div class="col-auto">
-          <select formControlName="classInput" class="form-select p-r-35" title="Select" [(ngModel)]="classToFetch">
+          <select formControlName="class" class="form-select p-r-35" title="Select" [(ngModel)]="classToFetch">
             <option default>Select Class</option>
             <option *ngFor="let class of (classes$ | async)" [value]="class.class_id" > {{class.className}} </option>
           </select>
         </div>
         <div class="col-auto">
-          <select formControlName="semesterInput" class="form-select p-r-35" title="Select" [(ngModel)]="semesterToFetch">
+          <select formControlName="semester" class="form-select p-r-35" title="Select" [(ngModel)]="semesterToFetch">
             <option default>Select Semester</option>
             <option *ngFor="let semester of (semesters$ | async)" [value]="semester._id" > {{semester.name}} </option>
           </select>
         </div>
         <div class="col-auto">
-          <button [disabled]="(classSemesterSelectionFrom.invalid)" class="btn btn-secondary" type="submit"> GET GRADES </button>
+          <button [disabled]="!(classSemesterSelectionFrom.valid)" class="btn btn-secondary" type="submit"> GET GRADES </button>
         </div>
       </form>
     </div>

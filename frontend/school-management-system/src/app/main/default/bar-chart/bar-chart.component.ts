@@ -1,5 +1,5 @@
 // angular import
-import { Component,  OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component,  OnInit, ViewChild } from '@angular/core';
 
 // project import
 import { SharedModule } from 'src/app/theme/shared/shared.module';
@@ -44,7 +44,9 @@ export type ChartOptions = {
 export class BarChartComponent implements OnInit{
 
 
-  constructor(private gradesService: GradesService, private fb : FormBuilder) {
+  constructor(private gradesService: GradesService, private fb : FormBuilder, private cd: ChangeDetectorRef) {
+    this.classes$ = gradesService.getClasses();
+    this.semesters$ = gradesService.getSemesters();
   }
 
 
@@ -67,14 +69,36 @@ export class BarChartComponent implements OnInit{
   private passedStudents = []
 
   private sortData(grades : GradesResponse[]){
+    this.courses = [];
+    this.failedStudents = [];
+    this.averageStudents = [];
+    this.passedStudents= [];
     grades.forEach(
       (data)=>{
-        this.courses.push(data.subject);
+        this.courses.push(data.subjectName);
         this.failedStudents.push(data.number_of_failed);
         this.averageStudents.push(data.number_of_average);
         this.passedStudents.push(data.number_of_passed); 
       }
-    )
+    );
+    this.chartOptions = {
+      ...this.chartOptions,
+      series: [{
+        name: 'Failed Students',
+        data: this.failedStudents || []
+      }, {
+        name: 'Average Students',
+        data: this.averageStudents || []
+      }, {
+        name: 'Passed Students',
+        data: this.passedStudents || []
+      }],
+      xaxis: {
+        categories: this.courses || []
+      }
+    };
+    console.log(this.chartOptions)
+  
   }
 
 
