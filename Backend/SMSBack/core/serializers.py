@@ -4,10 +4,35 @@ from .models import *
 from rest_framework_simplejwt.tokens import RefreshToken
 
 
+# class UserSerializer(serializers.ModelSerializer):
+#     name = serializers.SerializerMethodField(read_only=True)
+#     _id = serializers.SerializerMethodField(read_only=True)
+#     school_id = serializers.SerializerMethodField(read_only=True)
+
+#     class Meta:
+#         model = User
+#         fields = ['id', '_id', 'username', 'email', 'name', 'role', 'school_id', 'profile']
+
+#     def get__id(self, obj):
+#         return obj.id
+    
+#     def get_school_id(self, obj):
+#         if obj.role == 'school_admin':
+#             school = School.objects.filter(admin=obj).first()
+#             return school._id if school else None
+#         return None
+
+#     def get_name(self, obj):
+#         name = obj.first_name
+#         if name == '':
+#             name = obj.username
+#         return name
+
 class UserSerializer(serializers.ModelSerializer):
     name = serializers.SerializerMethodField(read_only=True)
     _id = serializers.SerializerMethodField(read_only=True)
     school_id = serializers.SerializerMethodField(read_only=True)
+    profile = serializers.SerializerMethodField()
 
     class Meta:
         model = User
@@ -15,7 +40,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     def get__id(self, obj):
         return obj.id
-    
+
     def get_school_id(self, obj):
         if obj.role == 'school_admin':
             school = School.objects.filter(admin=obj).first()
@@ -27,6 +52,13 @@ class UserSerializer(serializers.ModelSerializer):
         if name == '':
             name = obj.username
         return name
+
+    def get_profile(self, obj):
+        request = self.context.get('request')
+        if obj.profile:
+            relative_url = obj.profile.url
+            return request.build_absolute_uri(relative_url)
+        return None
 
 
 class UserSerializerWithToken(UserSerializer):
@@ -60,14 +92,19 @@ class ClassSerializer(serializers.ModelSerializer):
     school = serializers.CharField(source='school.name', read_only=True)
     className = serializers.SerializerMethodField()
     class_id = serializers.SerializerMethodField()
+    student_count = serializers.SerializerMethodField()
     class Meta:
         model = Class
-        fields = ['className', 'class_id', 'school']
+        fields = ['className', 'class_id', 'school', 'student_count']
 
     def get_className(self, obj):
         return obj.name
+    
     def get_class_id(self, obj):
         return obj._id
+    
+    def get_student_count(self, obj):
+        return obj.students.count()
     
 class SchoolSerializer(serializers.ModelSerializer):
     admin_username = serializers.SerializerMethodField(read_only=True)
