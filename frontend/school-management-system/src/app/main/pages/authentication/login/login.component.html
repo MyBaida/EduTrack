@@ -1,0 +1,82 @@
+<div class="auth-main">
+  <div class="auth-wrapper v3">
+    <div class="auth-form">
+      <div class="card my-5">
+        <div class="card-body">
+          <a href="#" class="d-flex justify-content-center">
+            <img src="assets/images/logo-dark.svg" />
+          </a>
+          <div *ngIf="alertMessage.message">
+            <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+              <symbol id="check-circle-fill" viewBox="0 0 16 16">
+                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+              </symbol>
+              <symbol id="exclamation-triangle-fill" viewBox="0 0 16 16">
+                <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+              </symbol>
+            </svg>
+            <div *ngIf="alertMessage.type==='success'" class="alert alert-success d-flex align-items-center mt-2" role="alert">
+              <svg class="bi flex-shrink-0 me-2" height="18" width="18"  role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+              <div>
+                {{alertMessage.message}}
+              </div>
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <div *ngIf="alertMessage.type==='warning'" class="alert alert-warning d-flex mt-2 alert-dismissible fade show" role="alert">
+              <svg class="bi flex-shrink-0 me-2" height="18" width="18"  role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+              <div>
+                {{alertMessage.message}}
+              </div>
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <div *ngIf="alertMessage.type==='danger'" class="alert alert-danger d-flex align-items-center mt-2" role="alert">
+              <svg class="bi flex-shrink-0 me-2" height="18" width="18"  role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+              <div>
+                {{alertMessage.message}}
+              </div>
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>  
+        </div>
+          <div class="row">
+            <div class="d-flex justify-content-center">
+              <div class="auth-header">
+                <h2 class="text-secondary mt-5"><b>Hi, Welcome Back</b></h2>
+                <p class="fs-4 mt-2">Enter your credentials to continue</p>
+              </div>
+            </div>
+          </div>
+          <div class="saprator mt-3">
+            <span></span>
+          </div>
+          <h5 class="my-4 d-flex justify-content-center"> Sign in with Username </h5>
+          <form [formGroup]="loginForm" (ngSubmit)="login()" > 
+          <div class="form-floating mb-3">
+            <input formControlName="username" type="email" class="form-control" id="floatingInput" value="info@codedthemes.com" />
+            <label for="floatingInput">Email</label>
+          </div>
+          <div class="form-floating mb-3">
+            <input formControlName="password" type="password" class="form-control" id="password" value="12345" />
+            <label for="password">Password</label>
+          </div>
+          <div class="d-flex mt-1 justify-content-between">
+            <div class="form-check">
+              <input class="form-check-input input-primary" type="checkbox" id="customCheckc1" checked="" />
+              <label class="form-check-label text-muted" for="customCheckc1">Remember me</label>
+            </div>
+            <h5 class="text-secondary">
+              <a href="javascript:">Forgot Password?</a>
+            </h5>
+          </div>
+          <div class="d-grid mt-4">
+            <button [disabled]="!(loginForm.valid)" type="submit" class="btn btn-secondary">Sign In</button>
+          </div>
+        </form>
+          <hr />
+          <h5 class="d-flex justify-content-center">
+            <a [routerLink]="['/guest/register']">Don't have an account?</a>
+          </h5>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
