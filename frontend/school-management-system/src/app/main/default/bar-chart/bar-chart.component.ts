@@ -1,5 +1,5 @@
 // angular import
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component,  OnInit, ViewChild } from '@angular/core';
 
 // project import
 import { SharedModule } from 'src/app/theme/shared/shared.module';
@@ -17,9 +17,10 @@ import {
   ApexPlotOptions,
   ApexResponsive
 } from 'ng-apexcharts';
-import { GradesService } from 'src/app/services/dashboard/grades/grades.service';
-import { Observable, Subject } from 'rxjs';
+import { allClassesResponse, allSemestersResponse, GradesService } from 'src/app/services/dashboard/grades/grades.service';
+import { Observable } from 'rxjs';
 import { GradesResponse } from 'src/app/services/dashboard/grades/grades-response';
+import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -36,78 +37,111 @@ export type ChartOptions = {
 @Component({
   selector: 'app-bar-chart',
   standalone: true,
-  imports: [NgApexchartsModule, SharedModule],
+  imports: [NgApexchartsModule, SharedModule, FormsModule, ReactiveFormsModule],
   templateUrl: './bar-chart.component.html',
   styleUrl: './bar-chart.component.scss'
 })
-export class BarChartComponent{
+export class BarChartComponent implements OnInit{
+
+
+  constructor(private gradesService: GradesService, private fb : FormBuilder, private cd: ChangeDetectorRef) {
+    this.classes$ = gradesService.getClasses();
+    this.semesters$ = gradesService.getSemesters();
+  }
+
+
   // public props
   @ViewChild('chart') chart!: ChartComponent;
   chartOptions!: Partial<ChartOptions>;
 
-  // gardes Observable
-
+  // grades
   grades : GradesResponse[] | undefined;
-  // private passedStudents = {
-  //   name : "passed",
-  //   data : []
-  // }
+  classes$ : Observable<allClassesResponse[]> | undefined;
+  semesters$: Observable<allSemestersResponse[]> | undefined;
 
-  private failedStudents = {}
-  private passedStudentsInSubject(grades: GradesResponse[], subject: string): number {
-    const grade = grades.find(grade => grade.subject === subject);
-    return grade ? grade.number_of_passed : 0;
-  }
+  semesterToFetch = '';
+  classToFetch = '';
 
-  private averageStudentsInSubject(grades: GradesResponse[], subject: string): number {
-    const grade = grades.find(grade => grade.subject === subject);
-    return grade ? grade.number_of_average : 0;
-  }
-  private failedStudentsInSubject(grades: GradesResponse[], subject: string): number {
-    const grade = grades.find(grade => grade.subject === subject);
-    return grade ? grade.number_of_failed : 0;
-  }
-  constructor(private gradesService: GradesService) {
-  gradesService.getGrades(1,1).subscribe(
-    response => this.grades = response
-  )
-  
-  
+  //chart options
+  private courses = []
+  private failedStudents = []
+  private averageStudents = []
+  private passedStudents = []
 
+  private sortData(grades : GradesResponse[]){
+    this.courses = [];
+    this.failedStudents = [];
+    this.averageStudents = [];
+    this.passedStudents= [];
+    grades.forEach(
+      (data)=>{
+        this.courses.push(data.subjectName);
+        this.failedStudents.push(data.number_of_failed);
+        this.averageStudents.push(data.number_of_average);
+        this.passedStudents.push(data.number_of_passed); 
+      }
+    );
     this.chartOptions = {
-      series: [
+      ...this.chartOptions,
+      series: [{
+        name: 'Failed Students',
+        data: this.failedStudents || []
+      }, {
+        name: 'Average Students',
+        data: this.averageStudents || []
+      }, {
+        name: 'Passed Students',
+        data: this.passedStudents || []
+      }],
+      xaxis: {
+        categories: this.courses || []
+      }
+    };
+    console.log(this.chartOptions)
+  
+  }
 
+
+  //Grade submission and class and semester selections
+  classSemesterSelectionFrom = this.fb.group({
+    semester : ['',[Validators.required]],
+    class : ['', [Validators.required]]
+  });
+  
+  get semesterInput(){
+    return this.classSemesterSelectionFrom.get('semester')
+  }
+  get classInput(){
+    return this.classSemesterSelectionFrom.get('class')
+  }
+
+  classSemesterSelectionFormSubmission(){
+    return this.gradesService.getGrades(this.classToFetch, this.semesterToFetch).subscribe(
+      (grades)=> this.sortData(grades)
+    )
+  }
+
+  
+
+
+  
+
+ngOnInit(): void {
+  this.chartOptions = {
+      series: [
         {
           name: 'failed',
-          // data: [35, 125, 35, 35, 35, 80, 35, 20, 35, 45, 15, 75]
-          data: [
-            this.passedStudentsInSubject(this.grades, 'Math'),
-            this.passedStudentsInSubject(this.grades, 'Science'),
-            this.passedStudentsInSubject(this.grades, 'Social'),
-            this.passedStudentsInSubject(this.grades, 'English'),
-            this.passedStudentsInSubject(this.grades, 'ICT'),
-            this.passedStudentsInSubject(this.grades, 'RME'),
-            this.passedStudentsInSubject(this.grades, 'BDT'),
-            this.passedStudentsInSubject(this.grades, 'GH.Lang'),
-            this.passedStudentsInSubject(this.grades, 'French')
-          ]
+          data: this.failedStudents
         },
         {
           name: 'average',
-          data: [35, 15, 15, 35, 65, 40, 80, 25, 15, 85, 25, 75]
+          data: this.averageStudents
         },
         {
           name: 'passed',
-          data: [35, 145, 35, 35, 20, 105, 100, 10, 65, 45, 30, 10]
-        },
-        {
-          name: 'Maintenance',
-          data: [0, 0, 75, 0, 0, 115, 0, 0, 0, 0, 150, 0]
+          data: this.passedStudents
         }
       ],
-    
-    
-
 
       dataLabels: {
         enabled: false
@@ -142,13 +176,14 @@ export class BarChartComponent{
       },
       xaxis: {
         type: 'category',
-        categories: ['Math', 'Science', 'Social', 'English', 'ICT', 'RME', 'BDT', 'GH.Lang', 'French']
+        categories: this.courses
       },
       tooltip: {
         theme: 'light'
       }
     };
-  }
-  
-  
+}
+
+
+
 }

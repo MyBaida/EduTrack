@@ -1,4 +1,4 @@
-<div class="ms-auto">
+<div class="ms-auto" *ngIf="profileData$ | async as profile">
   <ul class="list-unstyled">
     <li>
       <div class="dropdown pc-h-item" ngbDropdown>
@@ -116,15 +116,15 @@
           href="javascript:"
           ngbDropdownToggle
         >
-          <img src="assets/images/user/avatar-2.jpg" alt="user-image" class="user-avtar" />
+          <img [src]="profile.profile" alt="user-image" class="user-avtar" />
           <span>
             <i class="ti ti-settings"></i>
           </span>
         </a>
         <div class="dropdown-menu dropdown-user-profile dropdown-menu-end pc-h-dropdown" ngbDropdownMenu>
           <div class="dropdown-header">
-            <h4> Good Morning, <span class="small text-muted"> John Doe</span> </h4>
-            <p class="text-muted">Project Admin</p>
+            <h4> Good Morning, <span class="small text-muted">{{profile.name}}  </span> </h4>
+            <p class="text-muted"> {{profile.role}} </p>
             <form class="header-search">
               <div class="search-btn">
                 <i class="ti ti-search"></i>

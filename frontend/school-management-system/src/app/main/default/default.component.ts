@@ -10,6 +10,7 @@ import { ChartDataMonthComponent } from './chart-data-month/chart-data-month.com
 import { ProfileService } from 'src/app/services/dashboard/profile/profile.service';
 import { Observable } from 'rxjs';
 import { GradesResponse } from 'src/app/services/dashboard/grades/grades-response';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-default',
@@ -19,7 +20,7 @@ import { GradesResponse } from 'src/app/services/dashboard/grades/grades-respons
   styleUrls: ['./default.component.scss']
 })
 export class DefaultComponent  {
-  constructor( profile: ProfileService ){}
+  constructor( ){}
 
 
 
