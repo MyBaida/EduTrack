@@ -4,13 +4,13 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAdminUser 
 
-from core.models import Class, School, Grade, Semester, Subject
-from core.serializers import ClassSerializer
+from core.models import *
+from core.serializers import ClassSerializer, GradeSerializer
 from core.permissions import IsSuperAdmin, IsSchoolAdmin, IsTeacher, IsTeacherOfSubject, IsSchoolAdminOfSchool
 
 
 from rest_framework import status
-from django.db.models import Count
+from django.db.models import Count, Sum
 
 # @api_view(['GET'])
 # @permission_classes([IsSchoolAdmin])
@@ -97,6 +97,40 @@ def get_subject_grade_statistics(request, class_id, semester_id):
         })
 
     return Response(response_data, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+@permission_classes([IsSchoolAdmin])
+def top_students_view(request, semester_id, class_id):
+    try:
+        semester = Semester.objects.get(_id=semester_id)
+        print(semester)
+        class_obj = Class.objects.get(_id=class_id)
+    except (Semester.DoesNotExist, Class.DoesNotExist):
+        return Response({'error': 'Invalid semester or class ID'}, status=404)
+
+    students = Student.objects.filter(current_class=class_obj)
+
+    student_scores = {}
+    for student in students:
+        total_score = Grade.objects.filter(student=student, semester=semester, student__current_class=class_obj).aggregate(total_score=Sum('score'))['total_score'] or 0
+        student_scores[student._id] = {
+            'class_name': class_obj.name,
+            'student_name': f"{student.first_name} {student.last_name}",
+            'student_id': student._id,
+            'semester': semester.name,
+            'total_score': total_score
+        }
+
+    sorted_scores = sorted(student_scores.values(), key=lambda x: x['total_score'], reverse=True)
+
+    top_students = sorted_scores[:5]
+    bottom_students = sorted_scores[-5:]
+
+    return Response({
+        'top_students': top_students,
+        'bottom_students': bottom_students
+    })
 
 
 # @api_view(['POST'])
