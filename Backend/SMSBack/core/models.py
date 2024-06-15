@@ -63,7 +63,7 @@ class Student(models.Model):
     school = models.ForeignKey(School, on_delete=models.CASCADE, related_name='students')
     current_class = models.ForeignKey(Class, on_delete=models.SET_NULL, null=True, related_name='students')
     completed = models.BooleanField(default=False, blank=True, null=True)
-    completed_date = models.DateField()
+    completed_date = models.DateField(blank=True, null=True)
     _id= models.AutoField(primary_key=True, editable=False)
 
     def __str__(self):
