@@ -252,3 +252,82 @@
         "end_date": "2024-05-08"
     }
 ]
+
+> GET - Top 5 and Bottom 5 students of a class - http://127.0.0.1:8000/api/classes/id/semester/id/top-students/
+
+>> {
+    "top_students": [
+        {
+            "class_name": "3Science6",
+            "student_name": "Felix Azaglo",
+            "student_id": 16,
+            "semester": "2023/2024 Semester 1",
+            "total_score": 166
+        },
+        {
+            "class_name": "3Science6",
+            "student_name": "Ubaida Abdul-Fatahu",
+            "student_id": 2,
+            "semester": "2023/2024 Semester 1",
+            "total_score": 140
+        },
+        {
+            "class_name": "3Science6",
+            "student_name": "Ofori Amoah Darkwah",
+            "student_id": 1,
+            "semester": "2023/2024 Semester 1",
+            "total_score": 120
+        },
+        {
+            "class_name": "3Science6",
+            "student_name": "Beres Bani Etornam",
+            "student_id": 4,
+            "semester": "2023/2024 Semester 1",
+            "total_score": 111
+        },
+        {
+            "class_name": "3Science6",
+            "student_name": "Michael Danso Lawerteh",
+            "student_id": 3,
+            "semester": "2023/2024 Semester 1",
+            "total_score": 84
+        }
+    ],
+    "bottom_students": [
+        {
+            "class_name": "3Science6",
+            "student_name": "Sandra Dery-Kuuzume",
+            "student_id": 5,
+            "semester": "2023/2024 Semester 1",
+            "total_score": 74
+        },
+        {
+            "class_name": "3Science6",
+            "student_name": "Michael Danso Lawerteh",
+            "student_id": 3,
+            "semester": "2023/2024 Semester 1",
+            "total_score": 84
+        },
+        {
+            "class_name": "3Science6",
+            "student_name": "Beres Bani Etornam",
+            "student_id": 4,
+            "semester": "2023/2024 Semester 1",
+            "total_score": 111
+        },
+        {
+            "class_name": "3Science6",
+            "student_name": "Ofori Amoah Darkwah",
+            "student_id": 1,
+            "semester": "2023/2024 Semester 1",
+            "total_score": 120
+        },
+        {
+            "class_name": "3Science6",
+            "student_name": "Ubaida Abdul-Fatahu",
+            "student_id": 2,
+            "semester": "2023/2024 Semester 1",
+            "total_score": 140
+        }
+    ]
+}
