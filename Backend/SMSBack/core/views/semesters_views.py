@@ -5,7 +5,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAdminUser 
 
 from core.models import Semester, Subject, School
-from core.serializers import SemesterSerializer
+from core.serializers import SemesterSerializer, SubjectSerializer
 from core.permissions import IsSuperAdmin, IsSchoolAdmin, IsTeacher, IsTeacherOfSubject, IsSchoolAdminOfSchool
 
 
@@ -35,6 +35,21 @@ def getSemester(request, pk):
     semester = Semester.objects.get(_id=pk)
     serializer = SemesterSerializer(semester, many=False)
     return Response(serializer.data)
+
+
+@api_view(['GET'])
+# @permission_classes([IsSchoolAdmin])
+def semester_subjects(request, pk):
+    try:
+        semester = Semester.objects.get(_id=pk)
+    except Semester.DoesNotExist:
+        return Response({'error': 'Invalid semester ID'}, status=404)
+
+    subjects = Subject.objects.filter(semester=semester)
+    serializer = SubjectSerializer(subjects, many=True)
+
+    return Response(serializer.data)
+
 
 
 @api_view(['POST'])

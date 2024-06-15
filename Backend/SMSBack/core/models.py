@@ -94,10 +94,12 @@ class Grade(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='grades')
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE, related_name='grades')
     semester = models.ForeignKey(Semester, on_delete=models.CASCADE, related_name='grades')
-    grade = models.CharField(max_length=2, null=True, blank=True)  # e.g., A, B, C, etc.
+    grade = models.CharField(max_length=2, null=True, blank=True) 
+    score = models.PositiveIntegerField(null=True, blank=True)
     date_recorded = models.DateField(auto_now_add=True)
     _id= models.AutoField(primary_key=True, editable=False)
 
     def __str__(self):
         return f'{self.student} - {self.subject}: {self.grade}'
+        
 
