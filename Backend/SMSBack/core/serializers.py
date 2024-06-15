@@ -147,7 +147,7 @@ class GradeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Grade
-        fields = ['className', 'student', 'student_id', 'subject', 'semester', 'grade', 'date_recorded']
+        fields = ['className', 'student', 'student_id', 'subject', 'semester','score', 'grade', 'date_recorded']
 
     def get_student(self, obj):
         return f"{obj.student.first_name} {obj.student.last_name}"
