@@ -29,13 +29,13 @@ export type ChartOptions = {
 };
 
 @Component({
-  selector: 'app-bajaj-chart',
+  selector: 'app-performance-chart',
   standalone: true,
   imports: [SharedModule, NgApexchartsModule],
-  templateUrl: './bajaj-chart.component.html',
-  styleUrl: './bajaj-chart.component.scss'
+  templateUrl: './performance-chart.html',
+  styleUrl: './performance-chart.scss'
 })
-export class BajajChartComponent {
+export class PerformanceChartComponent {
   // public props
   @ViewChild('chart') chart!: ChartComponent;
   chartOptions!: Partial<ChartOptions>;

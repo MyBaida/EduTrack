@@ -2,14 +2,14 @@
   <div class="card-body">
     <div class="row mb-3 align-items-center">
       <div class="col">
-        <div class="text-sm">Total Growth</div>
-        <h3 class="mt-2 f-w-600">$2,324.00</h3>
+        <div class="text-sm">Class size</div>
+        <h3 class="mt-2 f-w-600">22</h3>
       </div>
       <form [formGroup]="classSemesterSelectionFrom" (ngSubmit)="classSemesterSelectionFormSubmission()">
         <div class="col-auto">
           <select formControlName="class" class="form-select p-r-35" title="Select" [(ngModel)]="classToFetch">
             <option default>Select Class</option>
-            <option *ngFor="let class of (classes$ | async)" [value]="class.class_id" > {{class.className}} </option>
+            <option #class *ngFor="let class of (classes$ | async)" [value]="class.class_id" > {{class.className}} </option>
           </select>
         </div>
         <div class="col-auto">
