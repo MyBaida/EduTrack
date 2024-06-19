@@ -93,13 +93,18 @@ class Subject(models.Model):
 class Grade(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='grades')
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE, related_name='grades')
-    semester = models.ForeignKey(Semester, on_delete=models.CASCADE, related_name='grades')
-    grade = models.CharField(max_length=2, null=True, blank=True) 
+    semester = models.ForeignKey(Semester, on_delete=models.CASCADE, null=True, blank=True)
+    grade = models.CharField(max_length=2, null=True, blank=True)
     score = models.PositiveIntegerField(null=True, blank=True)
     date_recorded = models.DateField(auto_now_add=True)
-    _id= models.AutoField(primary_key=True, editable=False)
+    _id = models.AutoField(primary_key=True, editable=False)
 
     def __str__(self):
         return f'{self.student} - {self.subject}: {self.grade}'
+
+    def save(self, *args, **kwargs):
+        if not self.semester:
+            self.semester = self.subject.semester
+        super().save(*args, **kwargs)
         
 

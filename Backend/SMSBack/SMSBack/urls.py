@@ -29,6 +29,7 @@ urlpatterns = [
     path('api/grades/', include('core.urls.grades_urls')),
     # path('api/subjects/', include('core.urls.subjects_urls')),
     path('api/semesters/', include('core.urls.semesters_urls')),
+    path('api/students/', include('core.urls.students_urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
