@@ -81,18 +81,18 @@
           <div class="px-3 pt-3">
             <div class="row mb-1 align-items-start">
               <div class="col">
-                <h5 class="text-secondary mb-0">Bajaj Finery</h5>
-                <small class="text-muted">10% Profit</small>
+                <h5 class="text-secondary mb-0">Best and Worst Performing Students </h5>
+                <small class="text-muted">semester</small>
               </div>
               <div class="col-auto">
-                <h4 class="mb-0">$1839.00</h4>
+                <h4 class="mb-0">Class</h4>
               </div>
             </div>
           </div>
-          <app-bajaj-chart />
+          <app-performance-chart />
         </div>
         <ul class="list-group list-group-flush">
-          @for (list of ListGroup; track list) {
+          @for (list of performanceList; track list) {
             <li class="list-group-item px-0 {{ list.space }}">
               <div class="row align-items-start">
                 <div class="col">
@@ -101,7 +101,7 @@
                 </div>
                 <div class="col-auto">
                   <h4 class="mb-0">
-                    {{ list.invest
+                    {{ list.score
                     }}<span class="ms-2 align-top avatar avatar-xxs {{ list.bgColor }}"
                       ><i class="{{ list.icon }} {{ list.color }}"></i
                     ></span>

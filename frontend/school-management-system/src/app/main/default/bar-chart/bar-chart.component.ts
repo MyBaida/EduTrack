@@ -116,6 +116,7 @@ export class BarChartComponent implements OnInit{
   }
 
   classSemesterSelectionFormSubmission(){
+    this.gradesService.setCurrentClassAndSemester(this.classToFetch,this.semesterToFetch)
     return this.gradesService.getGrades(this.classToFetch, this.semesterToFetch).subscribe(
       (grades)=> this.sortData(grades)
     )
