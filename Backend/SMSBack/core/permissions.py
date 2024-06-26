@@ -7,7 +7,7 @@ class IsSuperAdmin(permissions.BasePermission):
 
 class IsSchoolAdmin(permissions.BasePermission):
     def has_permission(self, request, view):
-        print(f"User role: {request.user.role}")
+        # print(f"User role: {request.user.role}")
         return request.user and request.user.role == 'school_admin'
 
 class IsTeacher(permissions.BasePermission):

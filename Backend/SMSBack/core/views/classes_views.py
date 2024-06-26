@@ -2,7 +2,6 @@ from django.shortcuts import render
 
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAdminUser 
 
 from core.models import *
 from core.serializers import ClassSerializer, GradeSerializer
@@ -104,7 +103,6 @@ def get_subject_grade_statistics(request, class_id, semester_id):
 def top_students_view(request, semester_id, class_id):
     try:
         semester = Semester.objects.get(_id=semester_id)
-        print(semester)
         class_obj = Class.objects.get(_id=class_id)
     except (Semester.DoesNotExist, Class.DoesNotExist):
         return Response({'error': 'Invalid semester or class ID'}, status=404)
