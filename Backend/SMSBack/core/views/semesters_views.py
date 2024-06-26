@@ -29,6 +29,7 @@ def getSemesters(request):
     serializer = SemesterSerializer(semesters, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
+
 @api_view(['GET'])
 @permission_classes([IsSchoolAdmin])
 def getSemester(request, pk):
@@ -38,7 +39,7 @@ def getSemester(request, pk):
 
 
 @api_view(['GET'])
-# @permission_classes([IsSchoolAdmin])
+@permission_classes([IsSchoolAdmin])
 def semester_subjects(request, pk):
     try:
         semester = Semester.objects.get(_id=pk)
