@@ -331,3 +331,24 @@
         }
     ]
 }
+
+
+> GET - Student totals scores for every semester - http://127.0.0.1:8000/api/students/1/semesters-scores/
+>> {
+    "student_name": "Ofori Amoah Darkwah",
+    "student_id": 1,
+    "semester_scores": [
+        {
+            "semester_name": "2023/2024 Semester 1",
+            "total_score": 120
+        },
+        {
+            "semester_name": "2023/2024 Semester 2",
+            "total_score": 0
+        },
+        {
+            "semester_name": "2024/2025 Semester 1",
+            "total_score": 0
+        }
+    ]
+}
