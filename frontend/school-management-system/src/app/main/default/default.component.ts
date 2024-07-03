@@ -8,10 +8,11 @@ import { BarChartComponent } from './bar-chart/bar-chart.component';
 import { ChartDataMonthComponent } from './chart-data-month/chart-data-month.component';
 import { ProfileService } from 'src/app/services/dashboard/profile/profile.service';
 import { Observable } from 'rxjs';
-import { GradesResponse } from 'src/app/services/dashboard/grades/grades-response';
+import { GradesResponse, gradeStatisticsAllSemesters, topAndWorstPerformanceResponse } from 'src/app/services/dashboard/grades/grades-response';
 import { FormsModule } from '@angular/forms';
 import { PerformanceChartComponent } from './performance-chart/performance-chart';
-import { classAndSemesterSharing, GradesService } from 'src/app/services/dashboard/grades/grades.service';
+import { GradesService } from 'src/app/services/dashboard/grades/grades.service';
+import { classAndSemesterSharing } from 'src/app/services/dashboard/grades/grades-response';
 
 @Component({
   selector: 'app-default',
@@ -25,13 +26,13 @@ export class DefaultComponent  {
   constructor(private gradesService : GradesService ){
     gradesService.currentClassAndSemester$.subscribe(
       (response)=>{
-        gradesService.getStudentPerformance(response.classId, response.semesterID).subscribe(
+        gradesService.getStudentsPerformance(response.classId, response.semesterID).subscribe(
           (data)=>{
             let top_students = data.top_students.map(
               (student) => {
                 return ({
                   name: student.student_name,
-                  score: student.total_score,
+                  student_id : student.student_id,                  score: student.total_score,
                   bgColor: 'bg-light-success',
                   icon: 'ti ti-chevron-up',
                   color: 'text-success'
@@ -43,6 +44,7 @@ export class DefaultComponent  {
               (student) => {
                 return ({
                   name: student.student_name,
+                  student_id : student.student_id,
                   score: student.total_score,
                   bgColor: 'bg-light-danger',
                   icon: 'ti ti-chevron-down',
@@ -57,7 +59,9 @@ export class DefaultComponent  {
         )
       }
   
+  
 
+  
   performanceList = []
 
   // public method
@@ -104,6 +108,18 @@ export class DefaultComponent  {
   //     space: 'pb-0'
   //   }
   // ];
+
+
+//fetch specific student performance across semesters
+studentGradeDataAllSemesters : gradeStatisticsAllSemesters
+getStudentPerformance(id){
+  this.gradesService.getStudentGradeStatisticsAllSemesters(id).subscribe(
+    data => this.studentGradeDataAllSemesters = data
+  )
+}
+
+
+
 
   profileCard = [
     {

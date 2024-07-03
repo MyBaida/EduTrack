@@ -82,18 +82,18 @@
             <div class="row mb-1 align-items-start">
               <div class="col">
                 <h5 class="text-secondary mb-0">Best and Worst Performing Students </h5>
-                <small class="text-muted">semester</small>
+                <small class="text-muted">{{studentGradeDataAllSemesters.student_name}} </small>
               </div>
               <div class="col-auto">
-                <h4 class="mb-0">Class</h4>
+                <h4 class="mb-0"> class </h4>
               </div>
             </div>
           </div>
-          <app-performance-chart />
+          <app-performance-chart [data]="studentGradeDataAllSemesters" />
         </div>
         <ul class="list-group list-group-flush">
           @for (list of performanceList; track list) {
-            <li class="list-group-item px-0 {{ list.space }}">
+            <li class="list-group-item px-0 {{ list.space }}" (click)="getStudentPerformance(list.student_id)" >
               <div class="row align-items-start">
                 <div class="col">
                   <h5 class="mb-0">{{ list.name }}</h5>

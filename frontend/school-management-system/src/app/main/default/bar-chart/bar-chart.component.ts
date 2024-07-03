@@ -17,7 +17,8 @@ import {
   ApexPlotOptions,
   ApexResponsive
 } from 'ng-apexcharts';
-import { allClassesResponse, allSemestersResponse, GradesService } from 'src/app/services/dashboard/grades/grades.service';
+import {  GradesService } from 'src/app/services/dashboard/grades/grades.service';
+import { allClassesResponse, allSemestersResponse } from 'src/app/services/dashboard/grades/grades-response';
 import { Observable } from 'rxjs';
 import { GradesResponse } from 'src/app/services/dashboard/grades/grades-response';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
