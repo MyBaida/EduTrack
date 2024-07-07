@@ -1,9 +1,21 @@
 from django.db.models import Sum
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from core.models import Grade, Semester, Student
+from core.models import Grade, Semester, Student, School
 from rest_framework.decorators import api_view, permission_classes
+from rest_framework import status
 from core.permissions import IsSuperAdmin, IsSchoolAdmin, IsTeacher, IsTeacherOfSubject, IsSchoolAdminOfSchool
+
+
+@api_view(['GET'])
+@permission_classes([IsSchoolAdmin])
+def getNumberOfStudents(request):
+    try:
+        school = request.user.managed_school
+    except School.DoesNotExist:
+        return Response({'error': 'School not found for current admin'}, status=status.HTTP_404_NOT_FOUND)
+    students= Student.objects.filter(school=school).count()
+    return Response(students)
 
 
 @api_view(['GET'])

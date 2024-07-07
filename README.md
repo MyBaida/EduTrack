@@ -352,3 +352,11 @@
         }
     ]
 }
+
+
+> GET - Number of teachers in a school - http://127.0.0.1:8000/api/teachers/number_of_teachers/
+>> 2
+
+
+> GET - Number of students in a school - http://127.0.0.1:8000/api/students/number_of_students/
+>> 16
