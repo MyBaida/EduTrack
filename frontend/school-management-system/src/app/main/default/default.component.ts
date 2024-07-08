@@ -32,7 +32,8 @@ export class DefaultComponent  {
               (student) => {
                 return ({
                   name: student.student_name,
-                  student_id : student.student_id,                  score: student.total_score,
+                  student_id : student.student_id,
+                  score: student.total_score,
                   bgColor: 'bg-light-success',
                   icon: 'ti ti-chevron-up',
                   color: 'text-success'
