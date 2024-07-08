@@ -262,72 +262,82 @@
             "student_name": "Felix Azaglo",
             "student_id": 16,
             "semester": "2023/2024 Semester 1",
-            "total_score": 166
+            "total_score": 166,
+            "profile": "http://127.0.0.1:8000/images/placeholder.png"
         },
         {
             "class_name": "3Science6",
             "student_name": "Ubaida Abdul-Fatahu",
             "student_id": 2,
             "semester": "2023/2024 Semester 1",
-            "total_score": 140
+            "total_score": 140,
+            "profile": "http://127.0.0.1:8000/images/placeholder.png"
         },
         {
             "class_name": "3Science6",
             "student_name": "Ofori Amoah Darkwah",
             "student_id": 1,
             "semester": "2023/2024 Semester 1",
-            "total_score": 120
+            "total_score": 120,
+            "profile": "http://127.0.0.1:8000/images/placeholder.png"
         },
         {
             "class_name": "3Science6",
             "student_name": "Beres Bani Etornam",
             "student_id": 4,
             "semester": "2023/2024 Semester 1",
-            "total_score": 111
+            "total_score": 111,
+            "profile": "http://127.0.0.1:8000/images/placeholder.png"
         },
         {
             "class_name": "3Science6",
             "student_name": "Michael Danso Lawerteh",
             "student_id": 3,
             "semester": "2023/2024 Semester 1",
-            "total_score": 84
+            "total_score": 84,
+            "profile": "http://127.0.0.1:8000/images/placeholder.png"
         }
     ],
     "bottom_students": [
         {
             "class_name": "3Science6",
-            "student_name": "Sandra Dery-Kuuzume",
-            "student_id": 5,
+            "student_name": "Ubaida Abdul-Fatahu",
+            "student_id": 2,
             "semester": "2023/2024 Semester 1",
-            "total_score": 74
-        },
-        {
-            "class_name": "3Science6",
-            "student_name": "Michael Danso Lawerteh",
-            "student_id": 3,
-            "semester": "2023/2024 Semester 1",
-            "total_score": 84
-        },
-        {
-            "class_name": "3Science6",
-            "student_name": "Beres Bani Etornam",
-            "student_id": 4,
-            "semester": "2023/2024 Semester 1",
-            "total_score": 111
+            "total_score": 140,
+            "profile": "http://127.0.0.1:8000/images/placeholder.png"
         },
         {
             "class_name": "3Science6",
             "student_name": "Ofori Amoah Darkwah",
             "student_id": 1,
             "semester": "2023/2024 Semester 1",
-            "total_score": 120
+            "total_score": 120,
+            "profile": "http://127.0.0.1:8000/images/placeholder.png"
         },
         {
             "class_name": "3Science6",
-            "student_name": "Ubaida Abdul-Fatahu",
-            "student_id": 2,
+            "student_name": "Beres Bani Etornam",
+            "student_id": 4,
             "semester": "2023/2024 Semester 1",
-            "total_score": 140
+            "total_score": 111,
+            "profile": "http://127.0.0.1:8000/images/placeholder.png"
+        },
+        {
+            "class_name": "3Science6",
+            "student_name": "Michael Danso Lawerteh",
+            "student_id": 3,
+            "semester": "2023/2024 Semester 1",
+            "total_score": 84,
+            "profile": "http://127.0.0.1:8000/images/placeholder.png"
+        },
+        {
+            "class_name": "3Science6",
+            "student_name": "Sandra Dery-Kuuzume",
+            "student_id": 5,
+            "semester": "2023/2024 Semester 1",
+            "total_score": 74,
+            "profile": "http://127.0.0.1:8000/images/placeholder.png"
         }
     ]
 }
@@ -352,3 +362,11 @@
         }
     ]
 }
+
+
+> GET - Number of teachers in a school - http://127.0.0.1:8000/api/teachers/number_of_teachers/
+>> 2
+
+
+> GET - Number of students in a school - http://127.0.0.1:8000/api/students/number_of_students/
+>> 16

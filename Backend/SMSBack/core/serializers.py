@@ -49,15 +49,19 @@ class UserSerializer(serializers.ModelSerializer):
 
     def get_name(self, obj):
         name = obj.first_name
-        if name == '':
+        if not name:
             name = obj.username
         return name
 
     def get_profile(self, obj):
         request = self.context.get('request')
-        if obj.profile:
+        if request and obj.profile:
             relative_url = obj.profile.url
-            return request.build_absolute_uri(relative_url)
+            # print(f"Relative URL: {relative_url}")  # Debugging print
+            absolute_url = request.build_absolute_uri(relative_url)
+            # print(f"Absolute URL: {absolute_url}")  # Debugging print
+            return absolute_url
+        print("Profile is None or request is missing")
         return None
 
 

@@ -111,13 +111,19 @@ def top_students_view(request, semester_id, class_id):
 
     student_scores = {}
     for student in students:
-        total_score = Grade.objects.filter(student=student, semester=semester, student__current_class=class_obj).aggregate(total_score=Sum('score'))['total_score'] or 0
+        total_score = Grade.objects.filter(
+            student=student, semester=semester, student__current_class=class_obj
+        ).aggregate(total_score=Sum('score'))['total_score'] or 0
+
+        profile_url = request.build_absolute_uri(student.profile.url)
+
         student_scores[student._id] = {
             'class_name': class_obj.name,
             'student_name': f"{student.first_name} {student.last_name}",
             'student_id': student._id,
             'semester': semester.name,
-            'total_score': total_score
+            'total_score': total_score,
+            'profile': profile_url
         }
 
     sorted_scores = sorted(student_scores.values(), key=lambda x: x['total_score'], reverse=True)
