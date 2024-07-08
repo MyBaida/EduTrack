@@ -46,5 +46,6 @@ def getUserById(request, pk):
 @permission_classes([IsAuthenticated])
 def getUserProfile(request):
     user = request.user
+    # print(f"User profile: {user.profile.url if user.profile else 'No profile image'}")  # Debugging print
     serializer = UserSerializer(user, context={'request': request})
     return Response(serializer.data)
